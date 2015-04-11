@@ -1,0 +1,31 @@
+{
+  "name": "theblarghyist",
+  "version": "0.0.1",
+  "homepage": "https://github.com/toekneefof/theblarghyist",
+  "authors": [
+    "loosefang"
+  ],
+  "description": "show how to blargh over interweb",
+  "main": "server.js",
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "blargh",
+    "billionaires"
+  ],
+  "license": "lolcense",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcam-directive": "~3.0.0"
+  }
+}
