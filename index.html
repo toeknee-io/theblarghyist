@@ -1,45 +1,34 @@
 <!doctype html>
 <html ng-app="theblarghyist">
+  
   <head>
+    
     <title>Blarghyists Board Room</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-    </style>
+
   </head>
+  
   <body>
+    
     Blaaaaaa <br><br>
-    <webcam>
-      
+<!--
+      on-stream="onSuccess(stream)"
+-->
+    <webcam
+      on-streaming="onStream(stream)"    
+    >
     </webcam>
-    <br>rrrrrrrrrgh<br><br>  
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-    <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/104137639/node_modules/angular/angular.js"></script>
-    <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/104137639/bower_components/webcam-directive/dist/webcam.min.js"></script>
-    <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/104137639/lib/app.js"></script>
-    <script type="text/javascript" src="https://dl.dropboxusercontent.com/u/104137639/lib/controllers/main.js"></script>
-    <script type="text/javascript" src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>    
-    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    
+    <br>rrrrrrrrrgh
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/scripts/angular.js"></script>
+    <script type="text/javascript" src="/scripts/webcam.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>    
+
     <script>
       var socket = io();
-      $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-      });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
-      });
     </script>
+    
   </body>
+  
 </html>

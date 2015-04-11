@@ -23,6 +23,28 @@
 })();
 
 angular.module('webcam', [])
+  .factory('socket', function ($rootScope) {
+    return {
+      on: function (eventName, callback) {
+        socket.on(eventName, function () {  
+          var args = arguments;
+          $rootScope.$apply(function () {
+            callback.apply(socket, args);
+          });
+        });
+      },
+      emit: function (eventName, data, callback) {
+        socket.emit(eventName, data, function () {
+          var args = arguments;
+          $rootScope.$apply(function () {
+            if (callback) {
+              callback.apply(socket, args);
+            }
+          });
+        });
+      }
+    };
+})
   .directive('webcam', function () {
     return {
       template: '<div class="webcam" ng-transclude></div>',
@@ -62,7 +84,7 @@ angular.module('webcam', [])
         // called when camera stream is loaded
         var onSuccess = function onSuccess(stream) {
           videoStream = stream;
-
+          socket.emit('test', 'merp');
           // Firefox supports a src object
           if (navigator.mozGetUserMedia) {
             videoElem.mozSrcObject = stream;
@@ -78,7 +100,7 @@ angular.module('webcam', [])
           /* Call custom callback */
           if ($scope.onStream) {
             $scope.onStream({stream: stream});
-          }
+          }			
         };
 
         // called when any error happens
