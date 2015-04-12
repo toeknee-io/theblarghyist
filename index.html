@@ -10,18 +10,15 @@
   <body>
     
     Blaaaaaa <br><br>
-<!--
-      on-stream="onSuccess(stream)"
--->
-    <webcam
-      on-streaming="onSuccess(stream);"
-      on-stream="onSuccess(stream);"
-    >
+
+    <webcam>
     </webcam>
     
-    <br>rrrrrrrrrgh <br><br>
+    <br>rrrrrrrrrgh<br><br>
 
-    <input id="file" type="file" />
+<!--    <input id="file" type="file" /><br><br> -->
+    <receive>
+    </receive>
     
     <script type="text/javascript" src="/js/angular.js"></script>
     <script type="text/javascript" src="/js/webcam.js"></script>        
@@ -47,7 +44,7 @@
           ss.createBlobReadStream(file).pipe(stream);
         });
       });
-      
+   
     </script>
     
   </body>

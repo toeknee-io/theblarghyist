@@ -5,6 +5,10 @@ var ss = require('socket.io-stream');
 var fs = require('fs');
 var path = require('path');
 
+var saveStream = function(streamSrc) {
+  return streamSrc;
+}
+
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
@@ -33,27 +37,31 @@ app.get('/js/jquery.js', function(req, res){
   res.sendFile(__dirname + '/node_modules/jquery/dist/jquery.js');  
 });
 
+app.get('/src', function(req, res){
+  res.send(streamSrc);
+  console.log('Server to client src:', streamSrc)
+});
+
 io.of('/').on('connection', function(socket){
   console.log('User connected to main page');
   
   socket.on('webcamMsg', function(msg) {
     console.log(msg);
   });
-  
-  socket.on('webcamStream', function(stream) {
-    console.log('Stream obj:', stream);
+
+  socket.on('srcRdy', function(webcamSrc) {
+    socket.emit('srcRdy', webcamSrc);
+    console.log('Storing stream src:', webcamSrc);
   });  
 });  
 
 io.of('/stream').on('connection', function(socket){
   console.log('User connected to stream');
+  
   ss(socket).on('fileSend', function(stream, data){
     var filename = path.basename(data.name);
     stream.pipe(fs.createWriteStream(filename));
-    console.log(filename);
-  });      
-  ss(socket).on('stream', function(stream, data){
-    stream.pipe(console.log(stream));
+    console.log('Filename:', filename);
   });  
 });
 
