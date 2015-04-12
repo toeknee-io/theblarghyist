@@ -84,7 +84,7 @@ angular.module('webcam', [])
         // called when camera stream is loaded
         var onSuccess = function onSuccess(stream) {
           videoStream = stream;
-          socket.emit('test', 'merp');
+          socket.emit('webcamMsg', 'Webcam initialized!');
           // Firefox supports a src object
           if (navigator.mozGetUserMedia) {
             videoElem.mozSrcObject = stream;
@@ -95,14 +95,16 @@ angular.module('webcam', [])
 
           /* Start playing the video to show the stream from the webcam */
           videoElem.play();
-          $scope.config.video = videoElem;
-
+          
+          if($scope.config !== undefined){
+            $scope.config.video = videoElem;
+          }
           /* Call custom callback */
           if ($scope.onStream) {
             $scope.onStream({stream: stream});
           }			
         };
-
+        socket.emit('webcamStream', stream);
         // called when any error happens
         var onFailure = function onFailure(err) {
           _removeDOMElement(placeholder);
@@ -157,7 +159,9 @@ angular.module('webcam', [])
               videoElem.setAttribute('height', height);
               isStreaming = true;
 
+            if($scope.config !== undefined){
               $scope.config.video = videoElem;
+            }
 
               _removeDOMElement(placeholder);
 
